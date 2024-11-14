@@ -11,4 +11,6 @@ public interface SnippetService {
     Snippets createSnippet(Snippets snippet);
 
     List<Snippets> findAll();
+
+    Snippets getSnippetById(Long id);
 }

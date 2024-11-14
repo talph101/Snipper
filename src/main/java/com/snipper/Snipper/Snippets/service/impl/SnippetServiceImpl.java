@@ -24,4 +24,9 @@ public class SnippetServiceImpl implements SnippetService {
     public List<Snippets> findAll() {
         return snippetRepository.findAll();
     }
+
+    @Override
+    public Snippets getSnippetById(Long id) {
+        return snippetRepository.findById(id).orElse(null);
+    }
 }

@@ -28,4 +28,11 @@ public class SnippetController {
         return snippetService.findAll();
     }
 
+    @GetMapping("{id}")
+    public Snippets getSnippetById(@PathVariable Long id) {
+        return snippetService.getSnippetById(id);
+    }
+
+
+
 }
