@@ -11,11 +11,7 @@ public class Snippets {
     private String language;
     private String code;
 
-
-    public Snippets(Long id, String language, String code) {
-        this.id = id;
-        this.language = language;
-        this.code = code;
+    public Snippets() {
     }
 
     public Long getId() {
