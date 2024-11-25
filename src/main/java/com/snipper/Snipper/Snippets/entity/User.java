@@ -17,6 +17,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    //stopped the recursive relationship/ or
     private List<Snippets> snippets;
 
     public Long getId() {

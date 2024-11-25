@@ -17,12 +17,14 @@ public class SnippetController {
         this.snippetService = snippetService;
     }
 
-    //
+    //when created you want to encrypt code snippet
+    //needs a Key or encryption password
     @PostMapping
     public Snippets createSnippet(@RequestBody Snippets snippet){
         return snippetService.createSnippet(snippet);
     }
 
+    //when you get you want to decrypt
     @GetMapping
     public List<Snippets> getAllSnippets(){
         return snippetService.findAll();
