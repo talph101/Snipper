@@ -61,3 +61,10 @@ public class Snippets {
         this.user = user;
     }
 }
+
+//  example:{
+//      "language" : "Java",
+//      "code": "System.out.println(\"Hello World!\");",
+//      "user" : {"id": 1}
+//
+//  }

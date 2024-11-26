@@ -3,6 +3,7 @@ package com.snipper.Snipper.Snippets.service.impl;
 import com.snipper.Snipper.Snippets.entity.Snippets;
 import com.snipper.Snipper.Snippets.repository.SnippetRepository;
 import com.snipper.Snipper.Snippets.service.SnippetService;
+import com.snipper.Snipper.Snippets.util.CryptoUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,12 @@ public class SnippetServiceImpl implements SnippetService {
 
     @Override
     public Snippets createSnippet(Snippets snippet) {
+        try{
+            String encryptedCode = CryptoUtil.encrypt(snippet.getCode());
+            snippet.setCode(encryptedCode);
+        } catch(Exception e){
+            throw new RuntimeException("Error encrypting snippet", e);
+        }
         return snippetRepository.save(snippet);
     }
 
