@@ -7,6 +7,7 @@ import com.snipper.Snipper.Snippets.util.CryptoUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SnippetServiceImpl implements SnippetService {
@@ -29,11 +30,31 @@ public class SnippetServiceImpl implements SnippetService {
 
     @Override
     public List<Snippets> findAll() {
-        return snippetRepository.findAll();
+        return snippetRepository.findAll().stream().map(snippet -> {
+            try{
+                //Decrypt before returning
+                snippet.setCode(CryptoUtil.decrypt(snippet.getCode()));
+            } catch (Exception e){
+                throw new RuntimeException("Error decrypting snippet", e);
+            }
+
+            return snippet;
+
+        }).collect(Collectors.toList());
+
     }
 
     @Override
     public Snippets getSnippetById(Long id) {
-        return snippetRepository.findById(id).orElse(null);
+
+        Snippets snippet = snippetRepository.findById(id).orElse(null);
+        if(snippet != null) {
+            try{
+                snippet.setCode(CryptoUtil.decrypt(snippet.getCode()));
+            } catch (Exception e) {
+                throw new RuntimeException("Error decrypting snippet", e);
+            }
+        }
+        return snippet;
     }
 }
