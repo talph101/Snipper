@@ -35,6 +35,10 @@ public class SnippetController {
         return snippetService.getSnippetById(id);
     }
 
+    @PutMapping("{id}")
+    public Snippets updateSnippet(@PathVariable Long id, @RequestBody Snippets updatedSnippet){
+        return snippetService.updateSnippet(id, updatedSnippet);
+    }
 
 
 }

@@ -57,4 +57,14 @@ public class SnippetServiceImpl implements SnippetService {
         }
         return snippet;
     }
+
+    @Override
+    public Snippets updateSnippet(Long snippetId, Snippets updatedSnippet) {
+        Snippets existingSnippet = snippetRepository.findById(snippetId).orElse(null);
+        existingSnippet.setLanguage(updatedSnippet.getLanguage());
+        existingSnippet.setCode(updatedSnippet.getCode());
+        existingSnippet.setUser(updatedSnippet.getUser());
+
+        return snippetRepository.save(existingSnippet);
+    }
 }
