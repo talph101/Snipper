@@ -61,10 +61,23 @@ public class SnippetServiceImpl implements SnippetService {
     @Override
     public Snippets updateSnippet(Long snippetId, Snippets updatedSnippet) {
         Snippets existingSnippet = snippetRepository.findById(snippetId).orElse(null);
-        existingSnippet.setLanguage(updatedSnippet.getLanguage());
-        existingSnippet.setCode(updatedSnippet.getCode());
-        existingSnippet.setUser(updatedSnippet.getUser());
-
+        if(existingSnippet != null) {
+            existingSnippet.setLanguage(updatedSnippet.getLanguage());
+            try{
+                String encryptedCode = CryptoUtil.encrypt(updatedSnippet.getCode());
+                existingSnippet.setCode(encryptedCode);
+            }catch (Exception e) {
+                throw new RuntimeException("Error encrypting code during update", e);
+            }
+            existingSnippet.setUser(updatedSnippet.getUser());
+        }
         return snippetRepository.save(existingSnippet);
+    }
+
+    @Override
+    public Snippets deleteSnippet(Long id) {
+        Snippets snippetToDelete = snippetRepository.findById(id).orElse(null);
+        snippetRepository.deleteById(id);
+        return snippetToDelete;
     }
 }

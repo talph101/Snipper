@@ -40,5 +40,11 @@ public class SnippetController {
         return snippetService.updateSnippet(id, updatedSnippet);
     }
 
+    @DeleteMapping("{id}")
+    public Snippets deleteSnippet(@PathVariable Long id) {
+        return snippetService.deleteSnippet(id);
+    }
+
+
 
 }
