@@ -6,6 +6,7 @@ import java.util.Base64;
 
 
 public class CryptoUtil {
+    //AES Advanced Encryption Standard
     private static final String ALGORITHM = "AES"; //encryption algorithm
     private static final String ENCRYPTION_KEY = "mySuperSecretKey";
 
@@ -14,6 +15,7 @@ public class CryptoUtil {
         SecretKeySpec secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        //Encode this encryption data in base64 format for more readability
         return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes()));
     }
 
@@ -22,6 +24,7 @@ public class CryptoUtil {
         SecretKeySpec secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        //Decrypt the encoded data
         return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedData)));
     }
 }
