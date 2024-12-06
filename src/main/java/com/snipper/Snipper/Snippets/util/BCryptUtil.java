@@ -9,7 +9,7 @@ public class BCryptUtil {
         return BCrypt.hashpw(originalPassword, BCrypt.gensalt());
     }
 
-    public static boolean mathPasswords(String originalPassword, String generatedSecurePassword){
+    public static boolean matchPasswords(String originalPassword, String generatedSecurePassword){
         return BCrypt.checkpw(originalPassword, generatedSecurePassword);
     }
 }

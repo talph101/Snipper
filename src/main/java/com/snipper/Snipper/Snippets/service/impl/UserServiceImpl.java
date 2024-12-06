@@ -3,6 +3,7 @@ package com.snipper.Snipper.Snippets.service.impl;
 import com.snipper.Snipper.Snippets.entity.User;
 import com.snipper.Snipper.Snippets.repository.UserRepository;
 import com.snipper.Snipper.Snippets.service.UserService;
+import com.snipper.Snipper.Snippets.util.BCryptUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        //Hash the password
+        String hashedPassword = BCryptUtil.generatedSecurePassword(user.getPassword());
+        user.setPassword(hashedPassword);
         return userRepository.save(user);
     }
 
