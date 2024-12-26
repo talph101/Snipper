@@ -2,11 +2,17 @@ package com.snipper.Snipper.Snippets.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.List;
 
 @Entity
+@Data //added
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
 public class User {
 
@@ -17,6 +23,8 @@ public class User {
     private String email;
 
     private String password;
+
+    private String roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
