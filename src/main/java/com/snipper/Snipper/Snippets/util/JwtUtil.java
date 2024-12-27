@@ -8,13 +8,14 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 public class JwtUtil {
-    private String SECRET_KEY = "secretkey";
+    private String SECRET_KEY = Base64.getEncoder().encodeToString("mySuperSecretKey".getBytes());
 
     //added
     public String generateToken(String username){
@@ -22,7 +23,7 @@ public class JwtUtil {
         return createToken(claims, username);
     }
 
-    private String createToken(Map<String, Object> claims, String object){
+    private String createToken(Map<String, Object> claims, String subject){
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)

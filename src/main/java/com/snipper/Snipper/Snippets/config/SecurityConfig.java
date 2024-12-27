@@ -1,7 +1,9 @@
 package com.snipper.Snipper.Snippets.config;
 
 
+import com.snipper.Snipper.Snippets.JwtAuthFilter;
 import com.snipper.Snipper.Snippets.service.UserService;
+import com.snipper.Snipper.Snippets.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,15 +33,15 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserService();
+        return new UserServiceImpl(); //ensures the implementation is returned
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/welcome", "/auth/register", "auth/generateToken")
+                        .requestMatchers( "/auth/register", "auth/generateToken").permitAll()
                         .requestMatchers("/auth/profile").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
                 )
