@@ -1,6 +1,7 @@
 package com.snipper.Snipper.Snippets.controller;
 
 
+import com.snipper.Snipper.Snippets.AuthRequest;
 import com.snipper.Snipper.Snippets.entity.Snippets;
 import com.snipper.Snipper.Snippets.entity.User;
 import com.snipper.Snipper.Snippets.service.UserService;
