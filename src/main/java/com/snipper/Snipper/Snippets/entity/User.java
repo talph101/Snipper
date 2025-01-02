@@ -24,7 +24,8 @@ public class User {
 
     private String password;
 
-    private String roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -63,3 +64,5 @@ public class User {
         this.snippets = snippets;
     }
 }
+
+

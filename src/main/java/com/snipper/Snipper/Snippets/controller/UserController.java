@@ -5,6 +5,7 @@ import com.snipper.Snipper.Snippets.AuthRequest;
 import com.snipper.Snipper.Snippets.entity.Snippets;
 import com.snipper.Snipper.Snippets.entity.User;
 import com.snipper.Snipper.Snippets.service.UserService;
+import com.snipper.Snipper.Snippets.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,7 +25,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtUtil jwtUtil;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -45,17 +47,20 @@ public class UserController {
     }
 
     @PostMapping("/generateToken")
-    public String authenticateAndGenerateToken(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-        );
-
-        if(authentication.isAuthenticated()){
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            throw new UsernameNotFoundException("Invalid user request!");
-        }
+    public Map<String, String> generateToken(@RequestBody AuthRequest authRequest) {
+        return Map.of("token", jwtUtil.generateToken(authRequest.getEmail()));
     }
+//    public String authenticateAndGenerateToken(@RequestBody AuthRequest authRequest) {
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+//        );
+//
+//        if(authentication.isAuthenticated()){
+//            return jwtUtil.generateToken(authRequest.getUsername());
+//        } else {
+//            throw new UsernameNotFoundException("Invalid user request!");
+//        }
+//    }
 
     @GetMapping
     public List<User> getAllUsers(){
