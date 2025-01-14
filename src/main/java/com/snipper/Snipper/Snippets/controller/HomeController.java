@@ -12,4 +12,9 @@ public class HomeController {
     public String home(Model model, @AuthenticationPrincipal OidcUser principal) {
         return "index";
     }
+
+    @GetMapping("/home")
+    public String home() {
+        return "Welcome to home page";
+    }
 }
